@@ -19,7 +19,6 @@ describe CurationConcern::GenericWorkActor do
       it 'returns false' do
         expect_any_instance_of(CurationConcern::GenericWorkActor).to receive(:save).and_return(false)
         allow(subject).to receive(:attach_files).and_return(true)
-        allow(subject).to receive(:create_linked_resource).and_return(true)
         expect(subject.create).to be false
       end
     end
@@ -140,26 +139,26 @@ describe CurationConcern::GenericWorkActor do
         end
       end
 
-      context 'with linked resources' do
-        let(:attributes) {
-          FactoryGirl.attributes_for(:generic_work, visibility: visibility, linked_resource_urls: ['http://www.youtube.com/watch?v=oHg5SJYRHA0', "http://google.com"])
-        }
+      # context 'with linked resources' do
+      #   let(:attributes) {
+      #     FactoryGirl.attributes_for(:generic_work, visibility: visibility, linked_resource_urls: ['http://www.youtube.com/watch?v=oHg5SJYRHA0', "http://google.com"])
+      #   }
 
-        it 'should stamp each link with the access rights' do
-          expect(subject.create).to be true
-          expect(curation_concern).to be_persisted
-          expect(curation_concern.date_uploaded).to eq Date.today
-          expect(curation_concern.date_modified).to eq Date.today
-          expect(curation_concern.depositor).to eq user.user_key
+      #   it 'should stamp each link with the access rights' do
+      #     expect(subject.create).to be true
+      #     expect(curation_concern).to be_persisted
+      #     expect(curation_concern.date_uploaded).to eq Date.today
+      #     expect(curation_concern.date_modified).to eq Date.today
+      #     expect(curation_concern.depositor).to eq user.user_key
 
-          expect(curation_concern.generic_files.count).to eq 0
-          expect(curation_concern.linked_resources.count).to eq 2
-          # Sanity test to make sure the file we uploaded is stored and has same permission as parent.
-          link = curation_concern.linked_resources.first
-          expect(link.url).to eq 'http://www.youtube.com/watch?v=oHg5SJYRHA0'
-          expect(curation_concern).to be_authenticated_only_access
-        end
-      end
+      #     expect(curation_concern.generic_files.count).to eq 0
+      #     expect(curation_concern.linked_resources.count).to eq 2
+      #     # Sanity test to make sure the file we uploaded is stored and has same permission as parent.
+      #     link = curation_concern.linked_resources.first
+      #     expect(link.url).to eq 'http://www.youtube.com/watch?v=oHg5SJYRHA0'
+      #     expect(curation_concern).to be_authenticated_only_access
+      #   end
+      # end
 
       context "with a present and a blank title" do
         let(:attributes) {
