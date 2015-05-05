@@ -40,7 +40,6 @@ describe CurationConcern::GenericFilesController do
 
           expect(saved_file.label).to eq 'image.png'
           expect(saved_file.batch).to eq parent
-          byebug
           # Confirming that date_uploaded and date_modified were set
           expect(saved_file.date_uploaded).to eq date_today
           expect(saved_file.date_modified).to eq date_today

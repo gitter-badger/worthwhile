@@ -8,8 +8,8 @@ module CurationConcern
     end
 
     def update
-      add_to_collections(attributes.delete(:collection_ids)) && interpret_visibility  &&
-        super && attach_files && copy_visibility
+      ##add_to_collections(attributes.delete(:collection_ids)) && 
+      interpret_visibility  && super && attach_files && copy_visibility
     end
 
     delegate :visibility_changed?, to: :curation_concern
