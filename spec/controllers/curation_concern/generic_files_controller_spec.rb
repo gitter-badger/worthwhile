@@ -15,7 +15,7 @@ describe CurationConcern::GenericFilesController do
       end
 
       context "on the happy path" do
-        let(:date_today) { Date.today }
+        let(:date_today) { DateTime.now }
 
         before do
           allow(Date).to receive(:today).and_return(date_today)
@@ -40,7 +40,7 @@ describe CurationConcern::GenericFilesController do
 
           expect(saved_file.label).to eq 'image.png'
           expect(saved_file.batch).to eq parent
-
+          byebug
           # Confirming that date_uploaded and date_modified were set
           expect(saved_file.date_uploaded).to eq date_today
           expect(saved_file.date_modified).to eq date_today
